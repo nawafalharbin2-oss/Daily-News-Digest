@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📰 موجز الأخبار العالمية اليومي</title>
+    <meta name="description" content="موجز يومي شامل للأخبار السياسية والاقتصادية العالمية">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --accent-light: #ff6b6b;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --text: #ecf0f1;
+            --text-light: #bdc3c7;
+            --bg-dark: #0f3460;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            padding: 60px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: slideInDown 0.8s ease;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: float 20s infinite linear;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            font-weight: 800;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .date-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+        }
+
+        .date-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1em;
+            background: rgba(255,255,255,0.15);
+            padding: 10px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .section-title {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .feature-article {
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.1) 0%, rgba(255, 107, 107, 0.05) 100%);
+            border-left: 5px solid var(--accent);
+            padding: 30px;
+            margin-bottom: 40px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .news-card {
+            background: rgba(22, 33, 62, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(233, 69, 96, 0.2);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.15);
+        }
+
+        .news-number {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .news-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-light);
+        }
+
+        .news-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+            color: var(--text-light);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 20px;
+        }
+
+        .news-summary {
+            margin-bottom: 15px;
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        .featured-section {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.1) 0%, rgba(52, 152, 219, 0.05) 100%);
+            border: 2px solid rgba(46, 204, 113, 0.3);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+
+        .featured-section h3 {
+            color: var(--success);
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .key-points {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .key-points ul {
+            list-style: none;
+        }
+
+        .key-points li {
+            padding: 10px 0;
+            padding-right: 20px;
+            position: relative;
+        }
+
+        .key-points li::before {
+            content: '✓';
+            position: absolute;
+            right: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .alerts-section {
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.1) 0%, rgba(230, 126, 34, 0.05) 100%);
+            border-left: 5px solid var(--warning);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 40px 0;
+        }
+
+        .alert-item {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .alert-item::before {
+            content: '⚡';
+            position: absolute;
+            left: 0;
+            color: var(--warning);
+        }
+
+        .footer {
+            background: var(--primary);
+            padding: 40px 30px;
+            text-align: center;
+            border-top: 2px solid rgba(233, 69, 96, 0.2);
+            margin-top: 60px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2em;
+        }
+
+        .last-update {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+
+        .category-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(90deg, rgba(233, 69, 96, 0.2) 0%, transparent 100%);
+            border-radius: 8px;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(20px, 20px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            .section-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="loading">⏳ جاري تحميل الأخبار...</div>
+    </div>
+
+    <script>
+        async function loadNews() {
+            try {
+                const response = await fetch('news_data.json?t=' + new Date().getTime());
+                const newsData = await response.json();
+                renderNews(newsData);
+            } catch (error) {
+                console.error('خطأ في تحميل البيانات:', error);
+                renderDefaultNews();
+            }
+        }
+
+        function renderNews(data) {
+            const app = document.getElementById('app');
+            
+            const html = `
+                <div class="header">
+                    <h1>📰 موجز الأخبار العالمية اليومي</h1>
+                    <p>تحديث يومي شامل للأخبار السياسية والاقتصادية العالمية</p>
+                    <div class="date-info">
+                        <div class="date-item">📅 ${data.date}</div>
+                        <div class="date-item">⏰ ${data.time} صباحاً (توقيت السعودية)</div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="section">
+                        <div class="section-title">🌟 موضوع التركيز اليوم</div>
+                        <div class="feature-article">
+                            <h3>${data.breaking_news.title}</h3>
+                            <p>${data.breaking_news.summary}</p>
+                            <div style="background: rgba(233, 69, 96, 0.1); padding: 12px; border-radius: 5px; margin: 15px 0;">
+                                <strong>التأثير:</strong> ${data.breaking_news.impact}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">🏛️ السياسة والعلاقات الدولية</div>
+                        ${renderPoliticsSection(data.politics)}
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">💰 الاقتصاد والأسواق المالية</div>
+                        ${renderEconomySection(data.economy)}
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">📚 مقالة اليوم</div>
+                        <div class="featured-section">
+                            <h3>${data.featured_article.title}</h3>
+                            <div class="article-meta" style="margin-bottom: 20px;">
+                                <span>✍️ ${data.featured_article.author}</span>
+                                <span>📰 ${data.featured_article.source}</span>
+                            </div>
+                            <p>${data.featured_article.summary}</p>
+                            <div class="key-points">
+                                <h4>✨ الأفكار الرئيسية:</h4>
+                                <ul>
+                                    ${data.featured_article.key_points.map(point => 
+                                        `<li>${point}</li>`
+                                    ).join('')}
+                                </ul>
+                            </div>
+                            <p><strong>الخلاصة:</strong> ${data.featured_article.conclusion}</p>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">📌 الملاحظات والتنبيهات</div>
+                        <div class="alerts-section">
+                            <h3 style="margin-bottom: 20px; color: var(--warning);">⚡ تنبيهات اليوم:</h3>
+                            ${data.alerts.map(alert => 
+                                `<div class="alert-item">${alert}</div>`
+                            ).join('')}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer">
+                    <h4>📰 موجز الأخبار العالمية اليومي</h4>
+                    <p>تحديث يومي تلقائي الساعة 7:30 صباحاً بتوقيت السعودية</p>
+                    <div class="last-update">
+                        <p>آخر تحديث: ${new Date().toLocaleString('ar-SA')}</p>
+                        <p>© 2025 Daily News Digest System</p>
+                    </div>
+                </div>
+            `;
+            
+            app.innerHTML = html;
+        }
+
+        function renderPoliticsSection(politics) {
+            let html = '';
+            
+            if (politics.saudi.length > 0) {
+                html += '<div class="category"><div class="category-title">🇸🇦 السعودية</div>';
+                html += politics.saudi.map(news => renderNewsCard(news)).join('');
+                html += '</div>';
+            }
+            
+            if (politics.arab_world.length > 0) {
+                html += '<div class="category"><div class="category-title">🌍 العالم العربي</div>';
+                html += politics.arab_world.map(news => renderNewsCard(news)).join('');
+                html += '</div>';
+            }
+            
+            if (politics.america.length > 0) {
+                html += '<div class="category"><div class="category-title">🇺🇸 أمريكا</div>';
+                html += politics.america.map(news => renderNewsCard(news)).join('');
+                html += '</div>';
+            }
+            
+            if (politics.rest_world.length > 0) {
+                html += '<div class="category"><div class="category-title">🌎 باقي العالم</div>';
+                html += politics.rest_world.map(news => renderNewsCard(news)).join('');
+                html += '</div>';
+            }
+            
+            return html;
+        }
+
+        function renderEconomySection(economy) {
+            return economy.map(news => renderNewsCard(news)).join('');
+        }
+
+        function renderNewsCard(news) {
+            return `
+                <div class="news-card">
+                    <div class="news-number">${news.number}</div>
+                    <div class="news-title">${news.title}</div>
+                    <div class="news-meta">
+                        <span class="meta-item">📰 ${news.source}</span>
+                    </div>
+                    <div class="news-summary">${news.summary}</div>
+                    ${news.impact ? `<div style="background: rgba(233, 69, 96, 0.1); padding: 12px; border-radius: 5px;">✨ ${news.impact}</div>` : ''}
+                </div>
+            `;
+        }
+
+        function renderDefaultNews() {
+            const defaultData = {
+                date: new Date().toLocaleDateString('ar-SA'),
+                time: '7:30',
+                breaking_news: {
+                    title: 'موضوع التركيز اليوم',
+                    summary: 'جاري تحديث الأخبار...',
+                    impact: 'سيتم التحديث تلقائياً'
+                },
+                politics: {
+                    saudi: [],
+                    arab_world: [],
+                    america: [],
+                    rest_world: []
+                },
+                economy: [],
+                featured_article: {
+                    title: 'مقالة اليوم',
+                    author: 'النظام',
+                    source: 'Daily News Digest',
+                    summary: 'جاري التحديث...',
+                    key_points: [],
+                    conclusion: 'سيتم التحديث تلقائياً كل صباح'
+                },
+                alerts: ['جاري تحديث النظام']
+            };
+            
+            renderNews(defaultData);
+        }
+
+        document.addEventListener('DOMContentLoaded', loadNews);
+        setInterval(loadNews, 3600000);
+    </script>
+</body>
+</html>
