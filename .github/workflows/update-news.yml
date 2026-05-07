@@ -1,0 +1,31 @@
+name: Daily News Update
+
+on:
+  schedule:
+    - cron: '30 4 * * *'
+  
+  workflow_dispatch:
+
+jobs:
+  update-news:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      
+      - name: Run news aggregator
+        run: python news_aggregator.py
+      
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add news_data.json
+          git commit -m "تحديث الأخبار - $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes"
+          git push
